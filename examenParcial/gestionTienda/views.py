@@ -4,7 +4,8 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Bienvenidos a la Aplicacion del Examen Parcial")
+    #return HttpResponse("Bienvenidos a la Aplicacion del Examen Parcial")
+    return render(request, 'index.html')
 
 def productos(request):
     #return HttpResponse("Vista de PRODUCTOS")

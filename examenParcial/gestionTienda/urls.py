@@ -5,8 +5,8 @@ app_name = 'gestionTienda'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('productos', views.productos, name='productos'),
-    path('tiendas',views.tiendas, name='tiendas'),
-    path('detalle-tiendas', views.detalle, name="detalle")
+    path('Productos', views.productos, name='productos'),
+    path('Tiendas',views.tiendas, name='tiendas'),
+    path('Detalle-tiendas', views.detalle, name="detalle")
 
 ]
