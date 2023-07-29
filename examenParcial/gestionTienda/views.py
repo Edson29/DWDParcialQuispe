@@ -33,23 +33,14 @@ def tiendas(request):
         'listaTiendas': Tienda.objects.all().order_by('id')
     })
 
-def detalle(request):    
-    return render(request, 'detalle.html')
+def detalle(request, idTienda):   
+    tienda = Tienda.objects.get(id=idTienda)
+    listaProductosTienda = Producto.objects.all().filter(tiendaRelacionada = tienda)
+    return render(request, 'detalle.html',{
+        'productosTienda': listaProductosTienda,
+        'tienda': tienda.provincia
+    })
 
-def registroTienda(request):
-    if request.method=='POST':
-        direccionTienda = request.POST.get('direccionTienda')
-        provinciaTienda = request.POST.get('provinciaTienda')        
-        regionTienda = request.POST.get('regionTienda')
-        fechaCreacion = date.today()
-        telefonoTienda = request.POST.get('telefonoTienda')
-        Tienda.objects.create(
-            direccion = direccionTienda,
-            provincia = provinciaTienda,
-            region = regionTienda,
-            fechaCreacion = fechaCreacion,
-            telefono = telefonoTienda,
-        )
-        return HttpResponseRedirect(reverse('gestionTienda:tiendas'))
+
     
         

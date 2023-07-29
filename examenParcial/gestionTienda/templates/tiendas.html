@@ -57,7 +57,7 @@
                                 <td>{{ tienda.region }}</td>
                                 <td>{{ tienda.fechaCreacion }}</td>
                                 <td>{{ tienda.telefono }}</td>
-                                <td class="text-center"><a class="btn btn-info" href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                <td class="text-center"><a class="btn btn-info" href="{% url 'gestionTienda:detalle' tienda.id %}"><i class="fa-solid fa-eye"></i></a></td>
                                 <td class="text-center"><a class="btn btn-danger" href="#"><i class="fa-solid fa-trash"></i></a></td>
                                 
                             </tr>
