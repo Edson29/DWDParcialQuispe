@@ -7,11 +7,28 @@ from datetime import date
 # Create your views here.
 
 def index(request):    
-    return render(request, 'index.html')
+    return HttpResponseRedirect(reverse('gestionTienda:tiendas'))
 
-def productos(request):    
+def productos(request):
+    if request.method == 'POST':
+        descripcion = request.POST.get('descripcion')
+        codigo = request.POST.get('codigo')
+        precioVenta = request.POST.get('precioVenta')
+        cantidad = request.POST.get('cantidad')
+        idTienda = request.POST.get('tienda')
+        tienda = Tienda.objects.get(id=idTienda)
+        Producto.objects.create(
+            descripcion = descripcion,
+            codigo = codigo,
+            precioVenta = precioVenta,
+            cantidad = cantidad,
+            tiendaRelacionada = tienda
+        )
+        return HttpResponseRedirect(reverse('gestionTienda:productos'))
+
     return render(request, 'productos.html', {
-        'listaProductos': Producto.objects.all().order_by('id')
+        'listaProductos': Producto.objects.all().order_by('id'),
+        'listaTiendas': Tienda.objects.all().order_by('id')
     })
 
 def tiendas(request):
@@ -38,8 +55,35 @@ def detalle(request, idTienda):
     listaProductosTienda = Producto.objects.all().filter(tiendaRelacionada = tienda)
     return render(request, 'detalle.html',{
         'productosTienda': listaProductosTienda,
-        'tienda': tienda.provincia
+        'tienda': tienda.provincia + ' - ' + tienda.region,
+        'idTienda':idTienda
     })
+
+def eliminarProducto(request, idProducto):
+    producto = Producto.objects.get(id=idProducto)
+    tienda = producto.tiendaRelacionada
+    idTienda = tienda.id
+    producto.delete()
+    return HttpResponseRedirect(reverse('gestionTienda:detalle',kwargs={'idTienda':idTienda}))
+
+def agregarProducto(request, idTienda):
+    if request.method == 'POST':
+        descripcion = request.POST.get('descripcion')
+        codigo = request.POST.get('codigo')
+        precioVenta = request.POST.get('precioVenta')
+        cantidad = request.POST.get('cantidad')
+        #idTienda = request.POST.get('tienda')
+        tienda = Tienda.objects.get(id=idTienda)
+        Producto.objects.create(
+            descripcion = descripcion,
+            codigo = codigo,
+            precioVenta = precioVenta,
+            cantidad = cantidad,
+            tiendaRelacionada = tienda
+        )
+        return HttpResponseRedirect(reverse('gestionTienda:detalle',kwargs={'idTienda':idTienda}))
+
+
 
 
     

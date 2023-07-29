@@ -14,4 +14,4 @@ class Producto(models.Model):
     codigo = models.CharField(max_length=50, blank=True, null=True)
     precioVenta = models.FloatField(blank=True, null=True)
     cantidad = models.IntegerField(blank=True, null=True)
-    tiendaRelacionada = models.OneToOneField(Tienda, on_delete=models.SET_NULL, blank=True, null=True)
+    tiendaRelacionada = models.ForeignKey(Tienda, on_delete=models.SET_NULL, blank=True, null=True)

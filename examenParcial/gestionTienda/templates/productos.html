@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand">LOGOBAKERY</a>
                 <div >
@@ -30,7 +30,7 @@
         <div class="container mt-5">
             <div class="row justify-content-between">
                 <div class="col-2">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoProducto">Crear <i class="fa-solid fa-plus"></i></button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoProducto">Crear Producto <i class="fa-solid fa-plus"></i></button>
                 </div>
                 
             </div>
@@ -38,26 +38,24 @@
         <br>
         <div class="mt-5 container">
             <div class="row justify-content-center">
-                <div class="col-8">
-                    <table class="table table-bordered">
-                        <thead>
-                            <th>Descripción</th>
-                            <th>Código</th>
-                            <th>Precio Venta</th>
-                            <th>Cantidad</th>
-                            <th>Tienda</th>
-                            <th>Ver Producto</th>
-                            <th>Eliminar Producto</th>
+                <div class="col-12 table-responsive">
+                    <table class="table table-light table-bordered table-striped">
+                        <thead class="thead-light">
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center" data-formatter="NumFormatter">Precio Venta</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">Tienda</th>                            
+                            <th class="text-center">Eliminar Producto</th>
                         </thead>
                         <tbody>
                             {% for producto in listaProductos %}
                             <tr>
                                 <td>{{ producto.descripcion }}</td>
-                                <td>{{ producto.codigo }}</td>
-                                <td>{{ producto.precioVenta }}</td>
-                                <td>{{ producto.cantidad }}</td>
-                                <td>{{ producto.tienda.provincia }}</td>
-                                <td class="text-center"><a class="btn btn-info" href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                <td class="text-center">{{ producto.codigo }}</td>
+                                <td class="text-center">{{ producto.precioVenta }}</td>
+                                <td class="text-center">{{ producto.cantidad }}</td>
+                                <td class="text-center">{{ producto.tiendaRelacionada.provincia }}</td>                                
                                 <td class="text-center"><a class="btn btn-danger" href="#"><i class="fa-solid fa-trash"></i></a></td>
                                
                             </tr>
@@ -80,25 +78,31 @@
                         <div class="modal-body">
                             <div class="row form-group justify-content-center mb-3">
                                 <div class="col-5">
-                                    <label>Descripcion</label>
+                                    <label>Descripción</label>
                                     <input class="form-control" type="text" name="descripcion" required>
                                 </div>
                                 <div class="col-5">
-                                    <label>Codigo</label>
+                                    <label>Código</label>
                                     <input class="form-control" type="text" name="codigo" required>
                                 </div>
                                 <div class="col-5">
                                     <label>Precio de Venta</label>
-                                    <input class="form-control" type="text" name="precioVenta" required>
+                                    <input class="form-control" type="number" name="precioVenta" required min="0.00" step="0.01">
                                 </div>
                                 
                                 <div class="col-5">
                                     <label>Cantidad</label>
-                                    <input class="form-control" type="text" name="cantidad" required>
+                                    <input class="form-control" type="number" name="cantidad" required min="0">
                                 </div>
+                                
                                 <div class="col-5">
-                                    <label>Tienda</label>
-                                    <input class="form-control" type="text" name="tienda" required>
+                                    <label>Seleccionar tienda</label>
+                                    <select class="form-select" name="tienda" required>
+                                        <option value="" selected></option>
+                                        {% for tienda in listaTiendas %}
+                                        <option value="{{ tienda.id }}">{{ tienda.provincia }} - {{ tienda.region }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                         </div>
