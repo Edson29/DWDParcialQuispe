@@ -82,6 +82,11 @@ def agregarProducto(request, idTienda):
             tiendaRelacionada = tienda
         )
         return HttpResponseRedirect(reverse('gestionTienda:detalle',kwargs={'idTienda':idTienda}))
+    
+def eliminarTienda(request, idTienda):
+    tienda = Tienda.objects.get(id=idTienda)
+    tienda.delete()
+    return HttpResponseRedirect(reverse('gestionTienda:tiendas'))
 
 
 
