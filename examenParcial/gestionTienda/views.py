@@ -43,7 +43,7 @@ def tiendas(request):
             provincia = provinciaTienda,
             region = regionTienda,
             fechaCreacion = fechaCreacion,
-            telefono = telefonoTienda,
+            telefono = telefonoTienda
         )
         return HttpResponseRedirect(reverse('gestionTienda:tiendas'))    
     return render(request, 'tiendas.html', {
@@ -55,7 +55,7 @@ def detalle(request, idTienda):
     listaProductosTienda = Producto.objects.all().filter(tiendaRelacionada = tienda)
     return render(request, 'detalle.html',{
         'productosTienda': listaProductosTienda,
-        'tienda': tienda.provincia + ' - ' + tienda.region,
+        'tienda': tienda,
         'idTienda':idTienda
     })
 
